@@ -19,11 +19,11 @@ export function normalizeZone(input, defaultZone) {
   } else if (isString(input)) {
     const lowered = input.toLowerCase();
     if (lowered === 'local') return LocalZone.instance;
-    else if (lowered === 'utc' || lowered == "gmt") return FixedOffsetZone.utcInstance;
+    else if (lowered === 'utc' || lowered == 'gmt') return FixedOffsetZone.utcInstance;
     else if ((offset = IANAZone.parseGMTOffset(input)) != null) {
       // handle Etc/GMT-4, which V8 chokes on
       return FixedOffsetZone.instance(offset);
-    } else if (IANAZone.isValidSpecifier(lowered)) return new IANAZone(input);
+    } else if (IANAZone.isValidSpecifier(lowered)) return IANAZone.create(input);
     else return FixedOffsetZone.parseSpecifier(lowered) || InvalidZone.instance;
   } else if (isNumber(input)) {
     return FixedOffsetZone.instance(input);
